@@ -16,24 +16,29 @@ const reducer = (state = 0, action) => {
 	}
 };
 
+const store = createStore(reducer);
+
+const inc = () => ({type: 'INC'});
+const dec = () => ({type: 'DEC'});
+const rnd = (payload) => ({type: 'RND', payload});
+
 const update = () => {
 	document
 		.getElementById('counter')
 		.innerHTML = store.getState();
 };
 
-const store = createStore(reducer);
 
 document
 	.getElementById('inc')
 	.addEventListener('click', () => {
-		store.dispatch({type: 'INC'});
+		store.dispatch(inc());
 	});
 
 document
 	.getElementById('dec')
 	.addEventListener('click', () => {
-		store.dispatch({type: 'DEC'});
+		store.dispatch(dec());
 	});
 
 document
@@ -41,10 +46,7 @@ document
 	.addEventListener('click', () => {
 		const payload = Math.floor(Math.random() * 10);
 
-		store.dispatch({
-			type: 'RND',
-			payLoad: payload
-		});
+		store.dispatch(rnd(payload));
 	});
 
 store.subscribe(update);
